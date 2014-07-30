@@ -1,0 +1,55 @@
+<project name="pib.compile"
+         xmlns:ivy="antlib:org.apache.ivy.ant"
+         default="copy-resources">
+
+	<macrodef name="mapproperty">
+		<attribute name="property" />
+		<attribute name="from" />
+		<sequential>
+			<property name="@{property}" value="${@{from}}" />
+		</sequential>
+	</macrodef>
+
+	<target name="init">
+		<mapproperty property="compile.java.dir"
+		             from="src.${compile.scope}.java" />
+		<mapproperty property="compile.resources.dir"
+		             from="src.${compile.scope}.resources" />
+		<mapproperty property="compile.classes.dir"
+		             from="classes.${compile.scope}.dir" />
+		<property name="compile.classpath" value="${compile.scope}.classpath" />
+
+		<property name="compile.target" value="${java.specification.version}" />
+		<property name="compile.source" value="${compile.target}" />
+
+		<available file="${compile.resources.dir}"
+		           property="compile.copy-resources" />
+
+		<!--
+		<echoproperties taskname="compile" prefix="compile"/>
+		-->
+
+	</target>
+
+	<target name="javac" depends="init">
+		<mkdir dir="${compile.classes.dir}" />
+		<javac destdir="${compile.classes.dir}"
+		       srcdir="${compile.java.dir}"
+		       includeantruntime="false"
+		       source="${compile.source}"
+		       target="${compile.target}"
+		       debug="true">
+			<classpath refid="${compile.classpath}" />
+		</javac>
+
+		<copy todir="${compile.classes.dir}" failonerror="false">
+			<fileset dir="${compile.java.dir}" excludes="**/*.java" />
+		</copy>
+	</target>
+
+	<target name="copy-resources" depends="javac" if="compile.copy-resources">
+		<copy todir="${compile.classes.dir}">
+			<fileset dir="${compile.resources.dir}" />
+		</copy>
+	</target>
+</project>

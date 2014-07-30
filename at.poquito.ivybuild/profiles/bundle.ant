@@ -1,0 +1,55 @@
+<project name="module" xmlns:ivy="antlib:org.apache.ivy.ant" default="install">
+	<property file="${pib.home}/profiles/bundle.properties" />
+
+	<path id="ivy.lib.path">
+		<pathelement location="${ivy.jar.file}" />
+	</path>
+
+	<taskdef resource="org/apache/ivy/ant/antlib.xml"
+	         uri="antlib:org.apache.ivy.ant"
+	         classpathref="ivy.lib.path" />
+
+	<ivy:configure settingsid="pib.settings" />
+
+	<target name="initialize">
+		<echo>${ant.project.name} - ${basedir}</echo>
+		<property name="encoding" value="${file.encoding}" />
+		<property name="src.main.java" value="src/main/java" />
+		<property name="src.main.resources" value="src/main/resources" />
+		<property name="src.test.java" value="src/test/java" />
+		<property name="src.test.resources" value="src/test/resources" />
+		<property name="lib.dir" value="${target.dir}/lib" />
+		<condition property="test.disabled" value="true">
+			<not>
+				<available file="${src.test.java}" />
+			</not>
+		</condition>
+		<ivy:info settingsref="pib.settings" />
+	</target>
+
+	<target name="validate" depends="initialize">
+		<property name="usecacheonly" value="true" />
+		<ivy:resolve settingsref="pib.settings"
+		             resolveid="pib.resolve"
+		             log="quiet"
+		             usecacheonly="${usecacheonly}" />
+	</target>
+
+	<target name="compile" depends="validate" />
+
+	<target name="test" depends="compile" />
+
+	<target name="package" depends="test" />
+
+	<target name="verify" depends="package">
+	</target>
+
+	<target name="install" depends="verify">
+		<ant antfile="${pib.home}/scripts/install.ant" inheritall="true" inheritrefs="true"/>
+	</target>
+
+	<target name="clean" depends="initialize">
+		<delete dir="${target.dir}" />
+	</target>
+
+</project>

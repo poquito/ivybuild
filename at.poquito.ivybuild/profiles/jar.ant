@@ -1,0 +1,59 @@
+<project name="jar" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<import file="bundle.ant" />
+
+	<target name="compile" depends="validate">
+		<ivy:cachepath pathid="main.classpath"
+		               conf="default,provided"
+		               settingsref="pib.settings" />
+
+		<ant antfile="${pib.home}/scripts/compile.ant"
+		     inheritall="true"
+		     inheritrefs="true">
+			<property name="compile.scope" value="main" />
+		</ant>
+
+	</target>
+
+	<target name="test" depends="compile" unless="test.disabled">
+		<ivy:cachepath pathid="test-dependencies"
+		               conf="test"
+		               settingsref="pib.settings" />
+
+		<path id="test.classpath">
+			<path path="${classes.main.dir}" />
+			<path refid="test-dependencies" />
+			<path refid="main.classpath" />
+		</path>
+
+		<ant antfile="${pib.home}/scripts/compile.ant"
+		     inheritall="true"
+		     inheritrefs="true">
+			<property name="compile.scope" value="test" />
+		</ant>
+
+		<property name="junit.dir" value="${reports.dir}/junit" />
+		<mkdir dir="${junit.dir}" />
+		<junit printsummary="true">
+			<formatter type="xml" />
+			<classpath>
+				<path path="${classes.test.dir}" />
+				<path refid="test.classpath" />
+			</classpath>
+			<batchtest todir="${junit.dir}">
+				<fileset dir="${src.test.java}">
+					<include name="**/*Test.java" />
+					<exclude name="**/AllTests.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+
+	</target>
+
+	<target name="package" depends="test">
+		<ant antfile="${pib.home}/scripts/package.ant"
+		     target="package-jar"
+		     inheritall="true"
+		     inheritrefs="true" />
+	</target>
+
+</project>

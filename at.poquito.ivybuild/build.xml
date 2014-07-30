@@ -1,0 +1,14 @@
+<project name="ivybuild"
+         default="install"
+         xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<import file="${pib.home}/profiles/bundle.ant" />
+
+	<target name="package" depends="module.test">
+		<mkdir dir="${target.dir}/artifacts" />
+		<zip destfile="${target.dir}/artifacts/ivybuild.zip">
+			<fileset dir="scripts" />
+		</zip>
+	</target>
+
+</project>

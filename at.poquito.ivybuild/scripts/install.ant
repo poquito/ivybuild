@@ -1,0 +1,38 @@
+<project name="pib.install"
+         default="install-goal"
+         xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<target name="init">
+		<property name="publish.resolver" value="local" />
+		<property name="status" value="${ivy.status}" />
+		<condition property="isRelease" value="true">
+			<equals arg1="${status}" arg2="release" />
+		</condition>
+	</target>
+
+	<target name="createBuildNumber" depends="init" unless="isRelease">
+		<ivy:buildnumber organisation="${ivy.organisation}"
+		                 module="${ivy.module}"
+		                 revision="${ivy.revision}-${status}"
+		                 defaultBuildNumber="1"
+		                 resolver="${publish.resolver}"
+		                 revsep=""
+		                 settingsref="pib.settings" />
+	</target>
+
+	<target name="install-goal" depends="createBuildNumber">
+		<property name="ivy.new.revision" value="${ivy.revision}" />
+		<echo>publish module with revision ${ivy.new.revision}</echo>
+		
+		<ivy:publish resolver="${publish.resolver}"
+		             pubrevision="${ivy.new.revision}"
+		             status="${status}"
+		             update="true"
+		             settingsref="pib.settings">
+			
+			<artifacts pattern="${artifacts.dir}/[artifact].[ext]" />
+			
+		</ivy:publish>
+		
+	</target>
+</project>

@@ -1,0 +1,33 @@
+<project name="pib.package">
+
+	<target name="package-source">
+		<jar destfile="${artifacts.dir}/${ivy.module}-sources.jar">
+			<fileset dir="${src.main.java}" />
+		</jar>
+	</target>
+
+	<target name="package-javadoc">
+		<property name="javadoc.dir" value="${reports.dir}/javadoc" />
+		<mkdir dir="${javadoc.dir}" />
+
+		<javadoc destdir="${javadoc.dir}"
+		         access="public"
+		         charset="utf-8"
+		         encoding="${encoding}"
+		         verbose="false"
+		         classpathref="main.classpath">
+			<fileset dir="${src.main.java}" defaultexcludes="yes">
+			</fileset>
+		</javadoc>
+
+		<jar destfile="${artifacts.dir}/${ivy.module}-javadoc.jar">
+			<fileset dir="${javadoc.dir}" />
+		</jar>
+	</target>
+
+	<target name="package-jar" depends="package-source, package-javadoc">
+		<jar basedir="${classes.main.dir}"
+		     destfile="${artifacts.dir}/${ivy.module}.jar" />
+	</target>
+
+</project>
