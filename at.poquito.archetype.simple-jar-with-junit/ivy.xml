@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info
+        organisation="at.poquito.archetype"
+        module="simple-jar-with-junit"
+        status="integration" 
+        revision="1.0.0">
+        <extends organisation="at.poquito" module="ivybuild" revision="1+"/>
+	</info>
+	
+	<!-- intended to be empty -->
+	<publications></publications>
+	
+	<dependencies>
+		<dependency org="junit" name="junit" rev="4.11+" conf="test->*"/>
+		<dependency org="org.mockito" name="mockito-all" rev="1.8+" conf="test->*"/>
+	</dependencies>
+</ivy-module>

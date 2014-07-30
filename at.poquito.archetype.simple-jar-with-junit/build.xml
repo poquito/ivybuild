@@ -1,0 +1,7 @@
+<project name="at.poquito.archetype.simple-jar-with-junit"
+         default="install"
+         xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<import file="${pib.home}/profiles/bundle.ant" />
+
+</project>
