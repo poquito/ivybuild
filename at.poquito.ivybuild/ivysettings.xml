@@ -1,5 +1,5 @@
 <ivysettings>
-	<properties file="${pib.home}/ivysettings.properties" />
+	<properties file="${ivy.settings.dir}/ivysettings.properties" />
 
 	<settings defaultCacheDir="${cache.dir}" defaultResolver="main" />
 	
@@ -7,12 +7,18 @@
 		<ibiblio name="public" m2compatible="true"/>
 		
 		<filesystem name="local">
-			<ivy pattern="${ivy.repository.pattern}/ivy.xml" />
-			<artifact pattern="${ivy.repository.pattern}/[artifact].[ext]" />
+			<ivy pattern="${ivy.repository.dir}/local/${ivy.repository.pattern}/ivy.xml" />
+			<artifact pattern="${ivy.repository.dir}/local/${ivy.repository.pattern}/[artifact].[ext]" />
 		</filesystem>
+		
+		<url name="shared">
+			<ivy pattern="http://poquito.at/ivyrepo/release/${ivy.repository.pattern}/ivy.xml" />
+			<artifact pattern="http://poquito.at/ivyrepo/release/${ivy.repository.pattern}/[artifact].[ext]" />
+		</url>
 
 		<chain name="main" dual="true">
 			<resolver ref="local" />
+			<resolver ref="shared" />
 			<resolver ref="public" />
 		</chain>
 
