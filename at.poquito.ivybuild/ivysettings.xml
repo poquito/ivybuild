@@ -1,0 +1,25 @@
+<ivysettings>
+	<properties file="${pib.home}/ivysettings.properties" />
+
+	<settings defaultCacheDir="${cache.dir}" defaultResolver="main" />
+	
+	<resolvers>
+		<ibiblio name="public" m2compatible="true"/>
+		
+		<filesystem name="local">
+			<ivy pattern="${ivy.repository.pattern}/ivy.xml" />
+			<artifact pattern="${ivy.repository.pattern}/[artifact].[ext]" />
+		</filesystem>
+
+		<chain name="main" dual="true">
+			<resolver ref="local" />
+			<resolver ref="public" />
+		</chain>
+
+	</resolvers>
+
+	<modules>
+		<module organisation="at.poquito.*" name=".*" resolver="local" />
+	</modules>
+	
+</ivysettings>
