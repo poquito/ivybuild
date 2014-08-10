@@ -1,0 +1,11 @@
+<project name="war" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<import file="jar.ant" />
+
+	<target name="package" depends="bundle.package">
+		<ant antfile="${pib.home}/scripts/package.ant"
+		     target="package-war"
+		     inheritall="true"
+		     inheritrefs="true" />
+	</target>
+
+</project>
