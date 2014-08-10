@@ -9,7 +9,7 @@
         >
 	</info>
 
-	<configurations>
+	<configurations defaultconf="runtime" defaultconfmapping="runtime->*;test->default;compile->default">
 		<conf name="default" visibility="public" extends="runtime,master"
 			description="runtime dependencies and master artifact can be used with this conf" />
   		<conf name="master" visibility="public" 
@@ -30,6 +30,8 @@
   			description="this configuration contains the javadoc artifact of this module, if any."/>
   		<conf name="optional" visibility="public" 
   			description="contains all optional dependencies"/>
+  		<conf name="war-lib" visibility="public" 
+  			description="this configuration contains all dependencies included into WEB-INF/lib"/>
 	</configurations>
 	
 	<publications>

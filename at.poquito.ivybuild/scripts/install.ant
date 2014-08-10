@@ -23,16 +23,17 @@
 	<target name="install-goal" depends="createBuildNumber">
 		<property name="ivy.new.revision" value="${ivy.revision}" />
 		<echo>publish module with revision ${ivy.new.revision}</echo>
-		
+
 		<ivy:publish resolver="${publish.resolver}"
 		             pubrevision="${ivy.new.revision}"
 		             status="${status}"
 		             update="true"
+		             forcedeliver="true"
 		             settingsref="pib.settings">
-			
+
 			<artifacts pattern="${artifacts.dir}/[artifact].[ext]" />
-			
+
 		</ivy:publish>
-		
+
 	</target>
 </project>

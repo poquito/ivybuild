@@ -6,7 +6,7 @@
         module="simple-jar-with-junit"
         status="integration" 
         revision="1.0.0">
-        <extends organisation="at.poquito" module="ivybuild" revision="1+"/>
+        <extends organisation="at.poquito" module="ivybuild" revision="1.0+"/>
 	</info>
 	
 	<!-- intended to be empty -->

@@ -3,7 +3,7 @@
 
 	<target name="compile" depends="validate">
 		<ivy:cachepath pathid="main.classpath"
-		               conf="default,provided"
+		               conf="default,provided,war-lib"
 		               settingsref="pib.settings" />
 
 		<ant antfile="${pib.home}/scripts/compile.ant"
@@ -49,7 +49,7 @@
 
 	</target>
 
-	<target name="package" depends="test">
+	<target name="package" depends="bundle.package">
 		<ant antfile="${pib.home}/scripts/package.ant"
 		     target="package-jar"
 		     inheritall="true"

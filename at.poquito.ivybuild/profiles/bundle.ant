@@ -1,4 +1,4 @@
-<project name="module" xmlns:ivy="antlib:org.apache.ivy.ant" default="install">
+<project name="bundle" xmlns:ivy="antlib:org.apache.ivy.ant" default="install">
 	<property file="${pib.home}/profiles/bundle.properties" />
 
 	<path id="ivy.lib.path">
@@ -31,7 +31,8 @@
 		<property name="usecacheonly" value="true" />
 		<ivy:resolve settingsref="pib.settings"
 		             resolveid="pib.resolve"
-		             log="quiet"
+		             keep="true"
+		             refresh="true"
 		             usecacheonly="${usecacheonly}" />
 	</target>
 
@@ -45,7 +46,9 @@
 	</target>
 
 	<target name="install" depends="verify">
-		<ant antfile="${pib.home}/scripts/install.ant" inheritall="true" inheritrefs="true"/>
+		<ant antfile="${pib.home}/scripts/install.ant"
+		     inheritall="true"
+		     inheritrefs="true" />
 	</target>
 
 	<target name="clean" depends="initialize">

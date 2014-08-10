@@ -1,4 +1,4 @@
-<project name="pib.package">
+<project name="pib.package" xmlns:ivy="antlib:org.apache.ivy.ant">
 
 	<target name="package-source">
 		<jar destfile="${artifacts.dir}/${ivy.module}-sources.jar">
@@ -23,6 +23,55 @@
 		<jar destfile="${artifacts.dir}/${ivy.module}-javadoc.jar">
 			<fileset dir="${javadoc.dir}" />
 		</jar>
+	</target>
+
+	<target name="package-ear">
+		<property name="earContent" value="EarContent" />
+		<mkdir dir="${artifacts.dir}/ear-libs" />
+
+		<!-- we need to resolve again, otherwise some corrupt file from the cache is used -->
+		<ivy:resolve settingsref="pib.settings"
+		             keep="true"
+		             log="quiet"
+		             usecacheonly="${usecacheonly}" />
+
+		<ivy:retrieve settingsref="pib.settings"
+		              conf="default"
+		              type="jar"
+		              pattern="${artifacts.dir}/ear-libs/lib/[artifact].[ext]">
+		</ivy:retrieve>
+		<ivy:retrieve settingsref="pib.settings"
+		              conf="default"
+		              type="ejb,war,rar,applicationClient"
+		              pattern="${artifacts.dir}/ear-libs/[artifact].[ext]">
+		</ivy:retrieve>
+
+		<ear destfile="${artifacts.dir}/${ivy.module}.ear"
+		     appxml="${earContent}/META-INF/application.xml">
+			<fileset dir="${earContent}">
+				<exclude name="META-INF/application.xml"/>
+			</fileset>
+			<fileset dir="${artifacts.dir}/ear-libs">
+				<include name="**/*" />
+			</fileset>
+		</ear>
+	</target>
+
+
+	<target name="package-war" depends="package-source, package-javadoc">
+		<property name="webContent" value="WebContent" />
+		<ivy:retrieve settingsref="pib.settings"
+		              conf="war-lib"
+		              pattern="${artifacts.dir}/war-libs/[artifact].[ext]" />
+		<war destfile="${artifacts.dir}/${ivy.module}.war"
+		     basedir="${webContent}">
+			<classes dir="${classes.main.dir}">
+				<include name="**/*" />
+			</classes>
+			<lib dir="${artifacts.dir}/war-libs">
+				<include name="**/*" />
+			</lib>
+		</war>
 	</target>
 
 	<target name="package-jar" depends="package-source, package-javadoc">

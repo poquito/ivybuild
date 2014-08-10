@@ -4,7 +4,7 @@
 
 	<import file="${pib.home}/profiles/bundle.ant" />
 
-	<target name="package" depends="module.test">
+	<target name="package" depends="bundle.package">
 		<mkdir dir="${target.dir}/artifacts" />
 		<zip destfile="${target.dir}/artifacts/ivybuild.zip">
 			<fileset dir="scripts" />
