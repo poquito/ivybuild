@@ -5,9 +5,15 @@
 		<pathelement location="${ivy.jar.file}" />
 	</path>
 
+	<condition property="ivy.settings.file"
+	           value="${ivy.settings.dir}/ivysettings.xml">
+		<isset property="ivy.settings.dir" />
+	</condition>
+	
 	<taskdef resource="org/apache/ivy/ant/antlib.xml"
 	         uri="antlib:org.apache.ivy.ant"
 	         classpathref="ivy.lib.path" />
+
 
 	<ivy:configure settingsid="pib.settings" />
 
@@ -27,8 +33,10 @@
 		<ivy:info settingsref="pib.settings" />
 	</target>
 
-	<target name="validate" depends="initialize">
-		<property name="usecacheonly" value="true" />
+	<target name="validate"
+	        depends="initialize"
+	        description="resolve dependencies and validate module">
+		<property name="usecacheonly" value="false" />
 		<ivy:resolve settingsref="pib.settings"
 		             resolveid="pib.resolve"
 		             keep="true"
@@ -36,22 +44,27 @@
 		             usecacheonly="${usecacheonly}" />
 	</target>
 
-	<target name="compile" depends="validate" />
+	<target name="compile" depends="validate"/>
 
-	<target name="test" depends="compile" />
+	<target name="test" depends="compile"/>
 
 	<target name="package" depends="test" />
 
-	<target name="verify" depends="package">
+	<target name="verify"
+	        depends="package">
 	</target>
 
-	<target name="install" depends="verify">
+	<target name="install"
+	        depends="verify"
+	        description="install module into local ivy repository">
 		<ant antfile="${pib.home}/scripts/install.ant"
 		     inheritall="true"
 		     inheritrefs="true" />
 	</target>
 
-	<target name="clean" depends="initialize">
+	<target name="clean"
+	        depends="initialize"
+	        description="remove target folder">
 		<delete dir="${target.dir}" />
 	</target>
 

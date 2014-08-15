@@ -1,0 +1,29 @@
+<ivysettings>
+	<property name="ivy.dir" value="${user.home}/.ivy2" override="false"/>
+	<property name="cache.dir" value="${ivy.dir}/caches" override="false"/>
+	<property name="repository.dir" value="${ivy.dir}/repositories" override="false"/>
+	<property name="repository.pattern" value="[organisation]/[module]/[revision]/[type]s" override="false" />
+
+	<settings defaultResolver="default.resolver" />
+	
+	<caches default="local" defaultCacheDir="${cache.dir}/local">
+		<cache name="release" basedir="${cache.dir}/release" defaultTTL="eternal"/>
+		<cache name="local" basedir="${cache.dir}/local" useOrigin="true" defaultTTL="0ms"/>
+	</caches>
+	
+	<resolvers>
+		<ibiblio name="ibiblio" m2compatible="true" cache="release"/>
+		
+		<filesystem name="local">
+			<ivy pattern="${repository.dir}/local/${repository.pattern}/ivy.xml" />
+			<artifact pattern="${repository.dir}/local/${repository.pattern}/[artifact].[ext]" />
+		</filesystem>
+
+		<chain name="default.resolver">
+			<resolver ref="local" />
+			<resolver ref="ibiblio" />
+		</chain>
+
+	</resolvers>
+	
+</ivysettings>

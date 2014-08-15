@@ -2,9 +2,20 @@
          default="install-goal"
          xmlns:ivy="antlib:org.apache.ivy.ant">
 
+	<macrodef name="mapproperty">
+		<attribute name="property" />
+		<attribute name="from" />
+		<sequential>
+			<property name="@{property}" value="${@{from}}" />
+		</sequential>
+	</macrodef>
+
 	<target name="init">
-		<property name="publish.resolver" value="local" />
+		<property name="integration.resolver" value="local" />
+		<property name="milestone.resolver" value="local" />
+		<property name="release.resolver" value="local" />
 		<property name="status" value="${ivy.status}" />
+		<mapproperty from="${status}.resolver" property="publish.resolver"/>
 		<condition property="isRelease" value="true">
 			<equals arg1="${status}" arg2="release" />
 		</condition>
@@ -22,6 +33,7 @@
 
 	<target name="install-goal" depends="createBuildNumber">
 		<property name="ivy.new.revision" value="${ivy.revision}" />
+		<property name="forceinstall" value="false" />
 		<echo>publish module with revision ${ivy.new.revision}</echo>
 
 		<ivy:publish resolver="${publish.resolver}"
@@ -29,6 +41,7 @@
 		             status="${status}"
 		             update="true"
 		             forcedeliver="true"
+		             overwrite="${forceinstall}"
 		             settingsref="pib.settings">
 
 			<artifacts pattern="${artifacts.dir}/[artifact].[ext]" />

@@ -49,7 +49,7 @@
 		<ear destfile="${artifacts.dir}/${ivy.module}.ear"
 		     appxml="${earContent}/META-INF/application.xml">
 			<fileset dir="${earContent}">
-				<exclude name="META-INF/application.xml"/>
+				<exclude name="META-INF/application.xml" />
 			</fileset>
 			<fileset dir="${artifacts.dir}/ear-libs">
 				<include name="**/*" />
@@ -77,6 +77,13 @@
 	<target name="package-jar" depends="package-source, package-javadoc">
 		<jar basedir="${classes.main.dir}"
 		     destfile="${artifacts.dir}/${ivy.module}.jar" />
+	</target>
+
+	<target name="package-zip">
+		<mkdir dir="${target.dir}/artifacts" />
+		<zip destfile="${target.dir}/artifacts/ivybuild.zip">
+			<fileset dir="${sources.main.dir}" excludes="${zip.excludes}" />
+		</zip>
 	</target>
 
 </project>
