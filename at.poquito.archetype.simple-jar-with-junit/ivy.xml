@@ -4,7 +4,7 @@
     <info
         organisation="at.poquito.archetype"
         module="simple-jar-with-junit"
-        status="milestone" 
+        status="release" 
         revision="1.0.0">
         <extends organisation="at.poquito" module="ivybuild" revision="1.0+"/>
 	</info>
