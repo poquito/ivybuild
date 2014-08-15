@@ -33,6 +33,11 @@
 			<artifact pattern="http://poquito.at/ivyrepo/release/${repository.pattern}/[artifact].[ext]" />
 		</url>
 		
+		<filesystem name="release" cache="poquito" m2compatible="true">
+			<ivy pattern="${repository.dir}/release/[organisation]/[module]/[revision]/ivy.xml" />
+			<artifact pattern="${repository.dir}/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+		</filesystem>
+		
 		<chain name="poquito.resolver">
 			<resolver ref="local" />
 			<resolver ref="release" />

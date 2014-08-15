@@ -9,7 +9,7 @@
 	<property name="ivy.dir" value="${user.home}/.ivy2" override="false"/>
 	<property name="cache.dir" value="${ivy.dir}/caches" override="false"/>
 	<property name="repository.dir" value="${ivy.dir}/repositories" override="false"/>
-	<property name="repository.pattern" value="[organisation]/[module]/[revision]/[type]s" override="false" />
+	<property name="repository.pattern" value="[organisation]/[module]/[revision]" override="false" />
 	<property name="stage" value="default" override="false" />
 
 	<settings defaultResolver="${stage}.resolver" />
@@ -24,19 +24,19 @@
 	<resolvers>
 		<ibiblio name="ibiblio" m2compatible="true" cache="remote"/>
 		
-		<filesystem name="local">
+		<filesystem name="local" m2compatible="true">
 			<ivy pattern="${ivy.dir}/repositories/local/${repository.pattern}/ivy.xml" />
-			<artifact pattern="${ivy.dir}/repositories/local/${repository.pattern}/[artifact].[ext]" />
+			<artifact pattern="${ivy.dir}/repositories/local/${repository.pattern}/[artifact]-[revision].[ext]" />
 		</filesystem>
 		
-		<filesystem name="milestone" cache="milestone">
+		<filesystem name="milestone" cache="milestone" m2compatible="true">
 			<ivy pattern="${repository.dir}/milestone/${repository.pattern}/ivy.xml" />
-			<artifact pattern="${repository.dir}/milestone/${repository.pattern}/[artifact].[ext]" />
+			<artifact pattern="${repository.dir}/milestone/${repository.pattern}/[artifact]-[revision].[ext]" />
 		</filesystem>
 		
-		<filesystem name="release" cache="release">
+		<filesystem name="release" cache="release" m2compatible="true">
 			<ivy pattern="${repository.dir}/release/${repository.pattern}/ivy.xml" />
-			<artifact pattern="${repository.dir}/release/${repository.pattern}/[artifact].[ext]" />
+			<artifact pattern="${repository.dir}/release/${repository.pattern}/[artifact]-[revision].[ext]" />
 		</filesystem>
 
 		<chain name="release.resolver">
