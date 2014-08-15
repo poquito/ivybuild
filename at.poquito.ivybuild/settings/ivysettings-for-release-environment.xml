@@ -1,19 +1,28 @@
+<!--
+	this sample configuration is used at the release stage.
+	
+	there are 3 different resolvers for the at.poquito organisation.
+		- local 'is used to '
+		  
+-->
 <ivysettings>
 	<property name="ivy.dir" value="${user.home}/.ivy2" override="false"/>
 	<property name="cache.dir" value="${ivy.dir}/caches" override="false"/>
 	<property name="repository.dir" value="${ivy.dir}/repositories" override="false"/>
 	<property name="repository.pattern" value="[organisation]/[module]/[revision]/[type]s" override="false" />
+	<property name="stage" value="default" override="false" />
 
-	<settings defaultResolver="default.resolver" />
+	<settings defaultResolver="${stage}.resolver" />
 	
 	<caches default="local" defaultCacheDir="${cache.dir}/local">
-		<cache name="release" basedir="${cache.dir}/release" defaultTTL="eternal"/>
-		<cache name="milestone" basedir="${cache.dir}/milestone" defaultTTL="eternal"/>
+		<cache name="remote" basedir="${cache.dir}/remote" defaultTTL="eternal"/>
+		<cache name="milestone" basedir="${cache.dir}/milestone" useOrigin="true" defaultTTL="1d"/>
+		<cache name="release" basedir="${cache.dir}/release" useOrigin="true" defaultTTL="1d"/>
 		<cache name="local" basedir="${cache.dir}/local" useOrigin="true" defaultTTL="1d"/>
 	</caches>
 	
 	<resolvers>
-		<ibiblio name="ibiblio" m2compatible="true" cache="release"/>
+		<ibiblio name="ibiblio" m2compatible="true" cache="remote"/>
 		
 		<filesystem name="local">
 			<ivy pattern="${ivy.dir}/repositories/local/${repository.pattern}/ivy.xml" />
@@ -30,13 +39,22 @@
 			<artifact pattern="${repository.dir}/release/${repository.pattern}/[artifact].[ext]" />
 		</filesystem>
 
-		<chain name="default.resolver">
-			<resolver ref="local" />
-			<resolver ref="milestone" />
+		<chain name="release.resolver">
 			<resolver ref="release" />
 			<resolver ref="ibiblio" />
 		</chain>
-
+		
+		<chain name="milestone.resolver">
+			<resolver ref="milestone" />
+			<resolver ref="release.resolver" />
+		</chain>
+		
+		<chain name="default.resolver">
+			<resolver ref="local" />
+			<resolver ref="milestone.resolver" />
+		</chain>
+		
+		
 	</resolvers>
 	
 </ivysettings>

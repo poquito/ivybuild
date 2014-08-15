@@ -2,7 +2,7 @@
 	<import file="bundle.ant" />
 
 	<target name="package" depends="bundle.package" description="create zip file for module" >
-		<ant antfile="${pib.home}/scripts/package.ant"
+		<ant antfile="${pib.install.dir}/scripts/package.ant"
 		     target="package-zip"
 		     inheritall="true"
 		     inheritrefs="true" />

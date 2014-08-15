@@ -1,3 +1,11 @@
+<!--
+	this sample configuration is used for developing on at.poquito code.
+	
+	the resovlver chain 'poquito.resolver' retrieves all local at.poquito artifacts and remote releases from the at.poquito organisation.
+	
+	the resovlver chain 'default.resolver' retrieves all other local and remote artifacts from other organisations.
+		  
+-->
 <ivysettings>
 	<property name="ivy.dir" value="${user.home}/.ivy2" override="false"/>
 	<property name="cache.dir" value="${ivy.dir}/caches" override="false"/>
@@ -7,36 +15,38 @@
 	<settings defaultResolver="default.resolver" />
 	
 	<caches default="local" defaultCacheDir="${cache.dir}/local">
-		<cache name="release" basedir="${cache.dir}/release" defaultTTL="eternal"/>
-		<cache name="milestone" basedir="${cache.dir}/milestone" defaultTTL="eternal"/>
+		<cache name="remote" basedir="${cache.dir}/remote" defaultTTL="eternal"/>
+		<cache name="poquito" basedir="${cache.dir}/poquito" defaultTTL="eternal"/>
 		<cache name="local" basedir="${cache.dir}/local" useOrigin="true" defaultTTL="1d"/>
 	</caches>
 	
 	<resolvers>
-		<ibiblio name="ibiblio" m2compatible="true" cache="release"/>
+		<ibiblio name="ibiblio" m2compatible="true" cache="remote"/>
 		
 		<filesystem name="local">
 			<ivy pattern="${repository.dir}/local/${repository.pattern}/ivy.xml" />
 			<artifact pattern="${repository.dir}/local/${repository.pattern}/[artifact].[ext]" />
 		</filesystem>
-		
-		<url name="milestone" cache="milestone">
-			<ivy pattern="http://poquito.at/ivyrepo/milestone/${repository.pattern}/ivy.xml" />
-			<artifact pattern="http://poquito.at/ivyrepo/milestone/${repository.pattern}/[artifact].[ext]" />
-		</url>
-		
-		<url name="release" cache="release">
+				
+		<url name="release" cache="poquito">
 			<ivy pattern="http://poquito.at/ivyrepo/release/${repository.pattern}/ivy.xml" />
 			<artifact pattern="http://poquito.at/ivyrepo/release/${repository.pattern}/[artifact].[ext]" />
 		</url>
 		
+		<chain name="poquito.resolver">
+			<resolver ref="local" />
+			<resolver ref="release" />
+		</chain>
+		
 		<chain name="default.resolver">
 			<resolver ref="local" />
-			<resolver ref="milestone" />
-			<resolver ref="release" />
 			<resolver ref="ibiblio" />
 		</chain>
 
 	</resolvers>
+	
+	<modules>
+		<module organisation="at.poquito*" resolver="poquito.resolver"/>
+	</modules>
 	
 </ivysettings>

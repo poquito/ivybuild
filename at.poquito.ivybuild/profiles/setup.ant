@@ -1,0 +1,14 @@
+<project name="setup">
+	<property name="pib.install.dir" value="${pib.home}" />
+
+	<property name="ivy.jar.file"
+	          value="${pib.install.dir}/lib/ivy-2.4.0-rc1.jar" />
+	<property name="target.dir" value="target" />
+	<property name="artifacts.dir" value="${target.dir}/artifacts" />
+	<property name="reports.dir" value="${target.dir}/reports" />
+	<property name="lib.dir" value="${target.dir}/lib" />
+	<property name="classes.main.dir" value="${target.dir}/classes" />
+	<property name="classes.test.dir" value="${target.dir}/test-classes" />
+
+
+</project>

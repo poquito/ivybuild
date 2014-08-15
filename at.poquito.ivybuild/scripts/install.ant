@@ -11,14 +11,27 @@
 	</macrodef>
 
 	<target name="init">
-		<property name="integration.resolver" value="local" />
-		<property name="milestone.resolver" value="local" />
-		<property name="release.resolver" value="local" />
+		<property name="stage" value="default" />
 		<property name="status" value="${ivy.status}" />
-		<mapproperty from="${status}.resolver" property="publish.resolver"/>
 		<condition property="isRelease" value="true">
 			<equals arg1="${status}" arg2="release" />
 		</condition>
+		
+		<fail message="Can't install module. Script runs with 'release' stage but module status is '${status}'.">
+			<condition>
+				<and>
+					<equals arg1="${stage}" arg2="release" />
+					<not>
+						<istrue value="${isRelease}" />
+					</not>
+				</and>
+			</condition>
+		</fail>
+
+		<property name="default.resolver" value="local" />
+		<property name="milestone.resolver" value="local" />
+		<property name="release.resolver" value="local" />
+		<mapproperty from="${stage}.resolver" property="publish.resolver" />
 	</target>
 
 	<target name="createBuildNumber" depends="init" unless="isRelease">
