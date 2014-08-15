@@ -5,7 +5,9 @@ a build system for JavaEE artifacts based on [ant](http://ant.apache.org/) and [
 ## Installation
 
 ###  Preconditions
-To run ivybuild you should first install [ant](http://ant.apache.org/) 1.8.4 ore above on your system. The project contains a `build.xml` which will install and setup the build system.
+To run ivybuild you need to provide [ant](http://ant.apache.org/) 1.8.4 ore above on your system. 
+
+The project contains a `build.xml` which will install and setup the build system.
 
 The default location for the installation will be the folder `ivybuild` inside the default ivy directory (e.g. $HOME/.ivy2). 
 
@@ -45,8 +47,8 @@ Open a console (cmd.exe or any unix shell) and type the following commands:
     # run ant build
     > ant
 
-### Configuration
-`ivybuild` needs a few configuration properties for succesfull execution. With the first run of the installation script, a `build.properties` file has been created in the `$HOME/.ivy2` directory. This file contains the default configuration and you have to add it to your `ANT_ARGS` environment-variable.
+### Console Setup
+`ivybuild` needs a few configuration properties for succesfull execution. With the first run of the installation script, a `build.properties` file has been created in the `$HOME/.ivy2` directory. This file contains the default configuration and you have to add it to your `ANT_ARGS` environment-variable. Subsequent installations or updates will not destroy your current configuraiton.
 
     # on windows
     set ANT_ARGS="-propertyfile %HOMEPATH%/.ivy2/build.properties
