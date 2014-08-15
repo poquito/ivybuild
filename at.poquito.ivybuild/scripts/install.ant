@@ -16,7 +16,7 @@
 		<condition property="isRelease" value="true">
 			<equals arg1="${status}" arg2="release" />
 		</condition>
-		
+
 		<fail message="Can't install module. Script runs with 'release' stage but module status is '${status}'.">
 			<condition>
 				<and>
@@ -49,17 +49,35 @@
 		<property name="forceinstall" value="false" />
 		<echo>publish module with revision ${ivy.new.revision}</echo>
 
+		<ivy:deliver deliverpattern="${artifacts.dir}/[artifact].[ext]"
+		             status="${status}"
+		             settingsref="pib.settings"
+		             pubrevision="${ivy.new.revision}" />
+
+		<ivy:makepom ivyfile="${artifacts.dir}/ivy.xml"
+		             pomfile="${artifacts.dir}/${ivy.module}.pom"
+		             conf="default,compile,runtime,provided">
+			<mapping conf="default" scope="compile" />
+			<mapping conf="compile" scope="compile" />
+			<mapping conf="runtime" scope="runtime" />
+			<mapping conf="provided" scope="provided" />
+		</ivy:makepom>
+
+		<property name="publish.ignoreMissingArtifacts" value="false" />
 		<ivy:publish resolver="${publish.resolver}"
 		             pubrevision="${ivy.new.revision}"
 		             status="${status}"
 		             update="true"
-		             forcedeliver="true"
+		             forcedeliver="false"
+		             haltonmissing="${publish.ignoreMissingArtifacts}"
 		             overwrite="${forceinstall}"
 		             settingsref="pib.settings">
 
+			<artifact name="${ivy.module}" type="pom" conf="optional" ext="pom" />
 			<artifacts pattern="${artifacts.dir}/[artifact].[ext]" />
 
 		</ivy:publish>
+
 
 	</target>
 </project>

@@ -9,7 +9,7 @@
         status="milestone"
         >
 	</info>
-
+	
 	<configurations defaultconf="runtime" defaultconfmapping="runtime->*;test->default;compile->default">
 		<conf name="default" visibility="public" extends="runtime,master"
 			description="runtime dependencies and master artifact can be used with this conf" />
