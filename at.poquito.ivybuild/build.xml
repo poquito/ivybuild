@@ -30,7 +30,7 @@
 			<entry key="pib.home" default="${pib.home}" />
 			<entry key="ivy.settings.dir" default="${pib.home}/settings" />
 			<entry key="ivy.settings.file"
-			       default="${pib.home}/settings/ivysettings-with-poquito-repository.xml" />
+			       default="${pib.home}/settings/ivysettings.xml" />
 		</propertyfile>
 	</target>
 
