@@ -60,9 +60,11 @@
 
 	<target name="package-war" depends="package-source, package-javadoc">
 		<property name="webContent" value="WebContent" />
+		<mkdir dir="${artifacts.dir}/war-libs" />
 		<ivy:retrieve settingsref="pib.settings"
 		              conf="war-lib"
 		              pattern="${artifacts.dir}/war-libs/[artifact].[ext]" />
+		
 		<war destfile="${artifacts.dir}/${ivy.module}.war"
 		     basedir="${webContent}">
 			<classes dir="${classes.main.dir}">
