@@ -12,7 +12,7 @@
 	<import file="profiles/zip.ant" />
 
 	<target name="deploy"
-	        depends="install"
+	        depends="validate"
 	        description="deploy/update ivybuild on the local environment">
 
 		<property name="pib.home" value="${user.home}/.ivy2/ivybuild" />

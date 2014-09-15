@@ -28,15 +28,11 @@
 			<artifact pattern="${repository.dir}/local/${repository.pattern}/[artifact].[ext]" />
 		</filesystem>
 				
-		<url name="release" cache="poquito">
-			<ivy pattern="http://poquito.at/ivyrepo/release/${repository.pattern}/ivy.xml" />
-			<artifact pattern="http://poquito.at/ivyrepo/release/${repository.pattern}/[artifact].[ext]" />
+		<url name="release" cache="poquito" m2compatible="true">
+			<!-- release repository has maven layout, do not use repository.pattern! -->
+			<ivy pattern="http://poquito.at/ivyrepo/release/[organisation]/[module]/[revision]/ivy.xml" />
+			<artifact pattern="http://poquito.at/ivyrepo/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
 		</url>
-		
-		<filesystem name="release" cache="poquito" m2compatible="true">
-			<ivy pattern="${repository.dir}/release/[organisation]/[module]/[revision]/ivy.xml" />
-			<artifact pattern="${repository.dir}/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
-		</filesystem>
 		
 		<chain name="poquito.resolver">
 			<resolver ref="local" />
