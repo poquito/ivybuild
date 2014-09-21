@@ -47,7 +47,8 @@
 	</resolvers>
 	
 	<modules>
-		<module organisation="at.poquito*" resolver="poquito.resolver"/>
+		<module organisation="at.poquito.archetype" resolver="poquito.resolver"/>
+		<module organisation="at.poquito.assetmanager" resolver="poquito.resolver"/>
 	</modules>
 	
 </ivysettings>
