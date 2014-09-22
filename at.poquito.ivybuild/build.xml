@@ -4,33 +4,27 @@
 	<dirname file="${ant.file}" property="pib.install.dir" />
 	<property name="ivy.settings.dir" value="${pib.install.dir}/settings" />
 	<property name="ivy.settings.file" value="${ivy.settings.dir}/ivysettings-with-poquito-repository.xml" />
-	
+
 	<!-- the source for zip file is root dir, exlude hidden files (eclipse settings) and target folder -->
 	<property name="sources.main.dir" value="${basedir}" />
 	<property name="zip.excludes" value=".*,target/**" />
 
 	<import file="profiles/zip.ant" />
 
-	<target name="deploy"
-	        depends="validate"
-	        description="deploy/update ivybuild on the local environment">
+	<target name="deploy" depends="verify" description="deploy/update ivybuild on the local environment">
 
 		<property name="pib.home" value="${user.home}/.ivy2/ivybuild" />
 		<mkdir dir="${pib.home}" />
 
-		<unzip dest="${pib.home}"
-		       src="${artifacts.dir}/ivybuild.zip"
-		       overwrite="true" />
+		<unzip dest="${pib.home}" src="${artifacts.dir}/ivybuild.zip" overwrite="true" />
 
-		<property name="pib.property.file"
-		          value="${user.home}/.ivy2/build.properties" />
+		<property name="pib.property.file" value="${user.home}/.ivy2/build.properties" />
 
 		<touch file="${pib.property.file}" />
 		<propertyfile file="${pib.property.file}">
 			<entry key="pib.home" default="${pib.home}" />
 			<entry key="ivy.settings.dir" default="${pib.home}/settings" />
-			<entry key="ivy.settings.file"
-			       default="${pib.home}/settings/ivysettings.xml" />
+			<entry key="ivy.settings.file" default="${pib.home}/settings/ivysettings.xml" />
 		</propertyfile>
 	</target>
 
