@@ -10,5 +10,6 @@
 	<property name="classes.main.dir" value="${target.dir}/classes" />
 	<property name="classes.test.dir" value="${target.dir}/test-classes" />
 
+	<tstamp />
 
 </project>

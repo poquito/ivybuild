@@ -64,8 +64,9 @@
 		<ivy:retrieve settingsref="pib.settings"
 		              conf="war-lib"
 		              pattern="${artifacts.dir}/war-libs/[artifact].[ext]" />
-		
+
 		<war destfile="${artifacts.dir}/${ivy.module}.war"
+		     manifest="${webContent}/META-INF/MANIFEST.MF"
 		     basedir="${webContent}">
 			<classes dir="${classes.main.dir}">
 				<include name="**/*" />
@@ -73,12 +74,24 @@
 			<lib dir="${artifacts.dir}/war-libs">
 				<include name="**/*" />
 			</lib>
+			<manifest>
+				<attribute name="Implementation-Title" value="${ivy.module}" />
+				<attribute name="Implementation-Version"
+				           value="${ivy.revision} ${TODAY} (${TSTAMP})" />
+			</manifest>
 		</war>
 	</target>
 
 	<target name="package-jar" depends="package-source, package-javadoc">
 		<jar basedir="${classes.main.dir}"
-		     destfile="${artifacts.dir}/${ivy.module}.jar" />
+		     manifest="${classes.main.dir}/META-INF/MANIFEST.MF"
+		     destfile="${artifacts.dir}/${ivy.module}.jar">
+			<manifest>
+				<attribute name="Implementation-Title" value="${ivy.module}" />
+				<attribute name="Implementation-Version"
+				           value="${ivy.revision} ${TODAY} (${TSTAMP})" />
+			</manifest>
+		</jar>
 	</target>
 
 	<target name="package-zip">
