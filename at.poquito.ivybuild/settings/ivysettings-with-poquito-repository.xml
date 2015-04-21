@@ -16,7 +16,7 @@
 	
 	<caches default="local" defaultCacheDir="${cache.dir}/local">
 		<cache name="remote" basedir="${cache.dir}/remote" defaultTTL="eternal"/>
-		<cache name="poquito" basedir="${cache.dir}/poquito" defaultTTL="eternal"/>
+		<cache name="poquito" basedir="${cache.dir}/poquito" defaultTTL="1h"/>
 		<cache name="local" basedir="${cache.dir}/local" useOrigin="true" defaultTTL="1d"/>
 	</caches>
 	
